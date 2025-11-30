@@ -17,21 +17,22 @@ class AIService:
 
     def traducir_y_explicar(self, texto):
         try:
+            # Le pedimos un formato estricto con un separador '|||'
             prompt = f"""
-            Actúa como un experto traductor y lingüista.
+            Actúa como un traductor experto. 
             Analiza el siguiente texto: "{texto}"
             
-            1. Tradúcelo al español (si ya está en español, tradúcelo al inglés).
-            2. Explica brevemente el contexto, tono o matices culturales si los hay.
-            
-            Formato de respuesta:
-            Traducción: [Texto traducido]
-            Contexto: [Explicación breve]
+            1. Tradúcelo al español (o al inglés si ya está en español).
+            2. Provee el contexto cultural, tono o significado oculto.
+
+            IMPORTANTE: Devuelve la respuesta en este formato exacto, usando '|||' como separador:
+            [Traducción aquí] ||| [Contexto aquí]
             """
+            
             response = self.model.generate_content(prompt)
             return response.text
         except Exception as e:
-            return f"Error al conectar con la IA: {e}"
+            return f"Error ||| {e}"
 
 # --- ZONA DE PRUEBA (Esto solo se ejecuta si corres este archivo directamente) ---
 if __name__ == "__main__":
